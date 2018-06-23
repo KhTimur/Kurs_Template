@@ -1,12 +1,12 @@
 #include <iterator>
 
-template <typename random_access_iterator_tag>
-void inser(random_access_iterator_tag begi, random_access_iterator_tag en)
+template <typename RandomAccessIterator>
+void inser(RandomAccessIterator  begi, RandomAccessIterator en)
 {
-    for(random_access_iterator_tag ptr  = begi; ptr != en; ptr++)
-        for(random_access_iterator_tag j=ptr; j != begi && *(j-1)>*j;j--)
-	    {
-	      std::swap(*(j-1),*j);
+    for(RandomAccessIterator ptr  = begi; ptr != en; ptr++)
+        for(RandomAccessIterator j=ptr; j != begi && *(j-1)>*j;j--)
+			{
+			   std::swap(*(j-1),*j);
             }
 }
 
@@ -54,10 +54,10 @@ void merge_sort(RandomAccessIterator first, RandomAccessIterator last)
 	merge_sort(first, last, std::less<typename std::iterator_traits<RandomAccessIterator>::value_type>());
 }
 
-template <typename random_access_iterator_tag>
-void downHeap(random_access_iterator_tag t, random_access_iterator_tag en) {
+template <typename RandomAccessIterator>
+void downHeap(RandomAccessIterator t, RandomAccessIterator en) {
   int const siz = (en-t);
-  random_access_iterator_tag k= en-(siz/2)-1;
+  RandomAccessIterator k= en-(siz/2)-1;
     while (k>=t)
     {
         int a= (k-t);
@@ -75,11 +75,11 @@ void downHeap(random_access_iterator_tag t, random_access_iterator_tag en) {
 
 
 
-template <typename random_access_iterator_tag>
-void heapSort(random_access_iterator_tag begi , random_access_iterator_tag en)
+template <typename RandomAccessIterator>
+void heapSort(RandomAccessIterator begi , RandomAccessIterator en)
 {
 
-    random_access_iterator_tag t=begi;
+    RandomAccessIterator t=begi;
     while(t<en)
     {
         downHeap(t, en);
@@ -88,14 +88,14 @@ void heapSort(random_access_iterator_tag begi , random_access_iterator_tag en)
 }
 
 
-template <typename random_access_iterator_tag>
-random_access_iterator_tag Partition(  random_access_iterator_tag left, random_access_iterator_tag right)
+template <typename RandomAccessIterator>
+RandomAccessIterator Partition(  RandomAccessIterator left, RandomAccessIterator right)
   {
       int const siz = (right-left);
-      random_access_iterator_tag pivot = std::next(left, siz / 2);
+      RandomAccessIterator pivot = std::next(left, siz / 2);
       std::swap(*pivot, *(right-1));
-      random_access_iterator_tag j=left;
-      for (random_access_iterator_tag i=left; i<(right-1);i++)
+      RandomAccessIterator j=left;
+      for (RandomAccessIterator i=left; i<(right-1);i++)
       {
           if (*i<*(right-1))
           {
@@ -107,13 +107,13 @@ random_access_iterator_tag Partition(  random_access_iterator_tag left, random_a
       return j;
   }
 
- template <typename random_access_iterator_tag>
-void quick_sort( random_access_iterator_tag begi, random_access_iterator_tag en )
+ template <typename RandomAccessIterator>
+void quick_sort( RandomAccessIterator begi, RandomAccessIterator en )
 {
      int const siz = std::distance(begi, en);
     if (siz>0)
      {
-     random_access_iterator_tag g=Partition( begi, en);
+     RandomAccessIterator g=Partition( begi, en);
      quick_sort( begi, g );
      quick_sort( g+1, en );
      }
