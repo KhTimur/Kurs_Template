@@ -10,55 +10,49 @@ void inser(random_access_iterator_tag begi, random_access_iterator_tag en)
             }
 }
 
-/*template <typename random_access_iterator_tag>
-void inplmerg (int* begi, int* middle, int* en)
+template <typename  RandomAccessIterator,typename FindMin>
+void merge_sort(RandomAccessIterator begi, RandomAccessIterator en, FindMin min)
 {
-   int const siz = std::distance(begi, en);
-   int num[siz];
-   int k=0;
-   int j=0;
-   int i=0;
-   while( ((begi+i)<middle) && ((middle+k)<en)  )
-       if(*(begi+i) < *(middle+k))
-          {
-            num[j]=*(begi+i);
-            i++;
-            j++;
-          }
-       else
-          {
-            num[j]=*(middle+k);
-            k++;
-            j++;
-          }
-   while ((begi+i)<middle)
-        {
-            num[j]=*(begi+i);
-            i++;
-            j++;
-        }
-   while ((middle+k)<en)
-        {
-            num[j]=*(middle+k);
-            k++;
-            j++;
-        }
-   for (int i = 0; i<siz; i++)
-      {
-        *(begi+i)=num[i];
-      }
+	int siz = std::distance(begi, en);
+    size_t first_half = siz / 2;
+	size_t second_half = siz - first_half;
+	if (siz <= 1)
+		return;
+	RandomAccessIterator middle = begi;
+	std::advance(middle, first_half);
+
+	merge_sort(begi, middle, min);
+	merge_sort(middle, en, min);
+
+	RandomAccessIterator right = middle;
+
+	while (begi != middle)
+	{
+		if (min(*right, *begi))
+		{
+			typename std::iterator_traits<RandomAccessIterator>::value_type replace =
+				std::move(*begi);
+			*begi = std::move(*right);
+			RandomAccessIterator scan = right;
+			RandomAccessIterator next = scan;
+			++next;
+
+			while (next != en && min(*next, replace))
+			{
+				*scan++ = std::move(*next++);
+			}
+
+			*scan = std::move(replace);
+		}
+		++begi;
+	}
 }
 
-template <typename random_access_iterator_tag>
-void merge_sort(int * begi, int *en)
+template <typename RandomAccessIterator>
+void merge_sort(RandomAccessIterator first, RandomAccessIterator last)
 {
-    int const siz = std::distance(begi, en);
-    if (siz <= 1) return;
-    int * const middle = begi+( siz / 2);
-    merge_sort(begi, middle);
-    merge_sort(middle, en);
-    inplmerg(begi, middle, en);
-}*/
+	merge_sort(first, last, std::less<typename std::iterator_traits<RandomAccessIterator>::value_type>());
+}
 
 template <typename random_access_iterator_tag>
 void downHeap(random_access_iterator_tag t, random_access_iterator_tag en) {
