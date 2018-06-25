@@ -7,7 +7,7 @@ SCENARIO("SORT"){
     int nums[] = { 1,2,3,4,5,6,7,8,9,10 };
     int numscheck[] = { 1,2,3,4,5,6,7,8,9,10 };
     int *begi = std::begin(nums);
-    int *en = end(nums);
+    int *en = std::end(nums);
     long int j=0;
     for(long int i=0;i<3628800;i++)
     {
